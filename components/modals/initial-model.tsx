@@ -26,7 +26,7 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button";
-import FileUpload from "@/components/file-upload";
+import { FileUpload } from "@/components/file-upload";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -59,6 +59,9 @@ export const InitialModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    if (values){
+      setShow(false)
+    }
   }
 
   if (!isMounted) {
@@ -66,7 +69,7 @@ export const InitialModal = () => {
   }
 
   return (
-    <Dialog open>
+    <Dialog open={true}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center text-zinc">
@@ -81,7 +84,7 @@ export const InitialModal = () => {
                 <FormField control={form.control} name="imageUrl" render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <FileUpload />
+                      <FileUpload onChange={field.onChange} value={field.value} endpoint="serverImage" />
                     </FormControl>
                   </FormItem>
                 )} />
